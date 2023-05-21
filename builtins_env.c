@@ -89,3 +89,4 @@ int builtin_unset_env(data_of_program *data)
 	env_remove_key(data->tokens[1], data);
 
 	return (0);
+}
