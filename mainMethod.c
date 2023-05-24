@@ -1,4 +1,28 @@
 #include "shell.h"
+
+void executeMyInput(char* args[], int shellMode, char* argv[])
+{
+int n;
+pid_t myChild = fork();
+
+switch (myChild) {
+case -1: /* Error handling - when fork() fails*/
+perror("Error fork() failed");
+exit(1);
+case 0: /* This is the child process*/
+execve(args[0], args, NULL);
+/* Check if shell is interactive or non-interactive mode*/
+if (shellMode) {
+perror(argv[0]);
+} else {
+fprintf(stderr, "%s: %d: %s: not found\n", argv[0], getpid(), args[0]);
+}
+break;
+default: /* This is the parent process*/
+waitpid(myChild, &n, 0);
+break;
+}
+}
 /**
 * myInputSplitToken - function that splits the input string
 * @userInput: pointer passed in function
@@ -31,10 +55,9 @@ int main(int argc, char *argv[])
 {
 char *userInput = NULL;
 size_t inputSize = 0;
+int shellMode;
 int inputValue;
-int n, shellMode;
 char *args[MAXIMUM__ARGS];
-pid_t myChild;
 (void)argc;
 do {
 /*Display prompt & get input using getline*/
@@ -54,30 +77,11 @@ exit(EXIT_FAILURE);
 }
 /*call function to split input string into individual tokens*/
 myInputSplitToken(userInput, args);
-/*Create a child-Process*/
-myChild = fork();
-switch (myChild)
-{
-case -1: /*Error handling - when fork() fails*/
-perror("Error fork() failed");
-exit(1);
-case 0: /* This is the child process*/
-execve(args[0], args, NULL);
-/*Check if shell is interactive or non interactive mode*/
+/* Check if shell is interactive or non-interactive mode*/
 shellMode = isatty(STDIN_FILENO);
-if (shellMode != 0)
-{
-perror(argv[0]);
-}
-else
-{
-fprintf(stderr, "%s: %d: %s: not found\n", argv[0], getpid(), args[0]);
-}
-break;
-default: /*This is the parent process*/
-waitpid(myChild, &n, 0);
-break;
-}
+
+/* Call function to create the child process*/
+executeMyInput(args, shellMode, argv);
 } while (1);
 free(userInput);
 return (0);
