@@ -7,6 +7,8 @@
 * Return: 0
 */
 
+extern char **environ;
+
 void executeMyInput(char *args[], int shellModes, char *argv[])
 {
 int n;
