@@ -31,10 +31,11 @@ int main(int argc, char *argv[])
 {
 char *userInput = NULL;
 size_t inputSize = 0;
-size_t inputValue;
+int inputValue;
 int n, shellMode;
 char *args[MAXIMUM__ARGS];
 pid_t myChild;
+(void)argc;
 do {
 /*Display prompt & get input using getline*/
 write(1, "$ ", 2);
@@ -64,7 +65,7 @@ case 0: /* This is the child process*/
 execve(args[0], args, NULL);
 /*Check if shell is interactive or non interactive mode*/
 shellMode = isatty(STDIN_FILENO);
-if (shellMode)
+if (shellMode != 0)
 {
 perror(argv[0]);
 }
@@ -72,7 +73,8 @@ else
 {
 fprintf(stderr, "%s: %d: %s: not found\n", argv[0], getpid(), args[0]);
 }
-default:/*This is the parent process*/
+break;
+default: /*This is the parent process*/
 waitpid(myChild, &n, 0);
 break;
 }
