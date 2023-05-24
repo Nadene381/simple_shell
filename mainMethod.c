@@ -16,16 +16,23 @@ char *args[MAXIMUM__ARGS];
 (void)argc;
 do {
 /*Display prompt & get input using getline*/
-write(1, "$ ", 2);
+if (isatty(STDIN_FILENO))
+{
+write(1, "$ ", 2 * sizeof(char));
 fflush(stdout);
+}
 inputValue = getline(&userInput, &inputSize, stdin);
 /*Error Handling - EOF condition/getline fails*/
-if (inputValue == -1)
+for (; inputValue == -1;)
 {
+if (feof(stdin)) {
+free(userInput);
+exit(EXIT_SUCCESS);
+} else {
 perror("Error");
 free(userInput);
 exit(EXIT_FAILURE);
-
+}
 }
 /* Remove newline characters*/
 for (; userInput[inputValue - 1] == '\n';)
