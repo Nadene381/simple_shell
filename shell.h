@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
+#define MAXIMUM__ARGS 64
+void myInputSplitToken(char *userInput, char *args[]);
 
-
-#endif
-~       
+#endif   
