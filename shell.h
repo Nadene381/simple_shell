@@ -7,8 +7,11 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
+extern char **environ;
 #define MAXIMUM__ARGS 64
+
 void myInputSplitToken(char *userInput, char *args[]);
 void executeMyInput(char *args[], int shellMode, char *argv[]);
+void myExit(char *userInput);
 
 #endif

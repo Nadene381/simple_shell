@@ -7,7 +7,7 @@
 * @argv: pointer passed in function
 * Return: 0
 */
-extern char **environ;
+
 
 void executeMyInput(char *args[], int shellModes, char *argv[])
 {
@@ -37,4 +37,5 @@ fflush(stdout);
 break;
 }
 }
+
 

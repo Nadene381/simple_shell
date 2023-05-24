@@ -15,36 +15,34 @@ ssize_t inputValue;
 char *args[MAXIMUM__ARGS];
 (void)argc;
 do {
-/*Display prompt & get input using getline*/
-if (isatty(STDIN_FILENO))
+if (isatty(STDIN_FILENO)) /*Display prompt in interactive mode & get input*/
 {
 write(1, "$ ", 2 * sizeof(char));
 fflush(stdout);
 }
 inputValue = getline(&userInput, &inputSize, stdin);
-/*Error Handling - EOF condition/getline fails*/
-for (; inputValue == -1;)
+for (; inputValue == -1;) /*Error Handling - EOF condition/getline fails*/
 {
-if (feof(stdin)) {
+if (feof(stdin))
+{
 free(userInput);
 exit(EXIT_SUCCESS);
-} else {
+}
+else
+{
 perror("Error");
 free(userInput);
 exit(EXIT_FAILURE);
 }
 }
-/* Remove newline characters*/
-for (; userInput[inputValue - 1] == '\n';)
+for (; userInput[inputValue - 1] == '\n';) /* Remove newline characters*/
 {
 userInput[inputValue - 1] = '\0';
 }
-/*call function to split input string into individual tokens*/
-myInputSplitToken(userInput, args);
-/* Check if shell is interactive or non-interactive mode*/
-shellMode = isatty(STDIN_FILENO);
-/* Call function to create the child process*/
-executeMyInput(args, shellMode, argv);
+myInputSplitToken(userInput, args);/*call function to split input string*/
+shellMode = isatty(STDIN_FILENO); /* Check if shell is interactive mode*/
+executeMyInput(args, shellMode, argv);/* Call funct to execute child process*/
+myExit(userInput);  /*Call exit Function*/
 } while (1);
 free(userInput);
 return (0);
