@@ -21,9 +21,7 @@ inputValue = getline(&userInput, &inputSize, stdin);
 /*Error Handling - EOF condition/getline fails*/
 if (inputValue == -1)
 {
-/*perror("Error");
-exit(EXIT_FAILURE);*/
-        break;
+break;
 }
 /* Remove newline characters*/
 for (; userInput[inputValue - 1] == '\n';)

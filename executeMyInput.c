@@ -18,7 +18,7 @@ case -1: /* Error handling - when fork() fails*/
 perror("Error fork() failed");
 exit(1);
 case 0: /* This is the child process*/
-execve(args[0], args, NULL);
+execve(args[0], args, environ);
 /* Check if shell is interactive or non-interactive mode*/
 if (shellModes)
 perror(argv[0]);
