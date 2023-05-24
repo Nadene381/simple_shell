@@ -18,16 +18,17 @@ do {
 write(1, "$ ", 2);
 fflush(stdout);
 inputValue = getline(&userInput, &inputSize, stdin);
+/*Error Handling - EOF condition/getline fails*/
+if (inputValue == -1)
+{
+/*perror("Error");
+exit(EXIT_FAILURE);*/
+        break;
+}
 /* Remove newline characters*/
 for (; userInput[inputValue - 1] == '\n';)
 {
 userInput[inputValue - 1] = '\0';
-}
-/*Error Handling - EOF condition/getline fails*/
-if (inputValue == -1)
-{
-return (-1);
-exit(EXIT_FAILURE);
 }
 /*call function to split input string into individual tokens*/
 myInputSplitToken(userInput, args);
