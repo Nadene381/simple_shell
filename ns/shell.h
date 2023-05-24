@@ -12,6 +12,7 @@ extern char **environ;
 
 void myInputSplitToken(char *userInput, char *args[]);
 void executeMyInput(char *args[], int shellMode, char *argv[]);
-void myExit(char *userInput);
+void myExit();
+void myEnv();
 
 #endif

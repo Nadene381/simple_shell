@@ -42,7 +42,10 @@ userInput[inputValue - 1] = '\0';
 myInputSplitToken(userInput, args);/*call function to split input string*/
 shellMode = isatty(STDIN_FILENO); /* Check if shell is interactive mode*/
 executeMyInput(args, shellMode, argv);/* Call funct to execute child process*/
-myExit(userInput);  /*Call exit Function*/
+myEnv();
+if (strcmp(args[0], "exit") == 0)
+myExit();  /*Call exit Function*/
+/*continue;*/
 } while (1);
 free(userInput);
 return (0);
