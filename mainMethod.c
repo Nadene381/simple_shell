@@ -10,7 +10,8 @@ int main(int argc, char *argv[])
 {
 char *userInput = NULL;
 size_t inputSize = 0;
-int shellMode, inputValue;
+int shellMode;
+ssize_t inputValue;
 char *args[MAXIMUM__ARGS];
 (void)argc;
 do {
@@ -21,7 +22,10 @@ inputValue = getline(&userInput, &inputSize, stdin);
 /*Error Handling - EOF condition/getline fails*/
 if (inputValue == -1)
 {
-break;
+perror("Error");
+free(userInput);
+exit(EXIT_FAILURE);
+
 }
 /* Remove newline characters*/
 for (; userInput[inputValue - 1] == '\n';)
