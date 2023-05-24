@@ -32,7 +32,7 @@ else
 {
 perror("Error");
 free(userInput);
-exit(EXIT_FAILURE);
+exit(EXIT_SUCCESS);
 }
 }
 for (; userInput[inputValue - 1] == '\n';) /* Remove newline characters*/
